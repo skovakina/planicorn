@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Planicorn{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="body">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-logo">Planicorn</a>
+        </div>
+        <div class="navbar-links">
+            <a href="{% url 'login' %}" class="navbar-link">Sign In</a>
+            <a href="{% url 'signup' %}" class="navbar-link">Sign Up</a>
+            <a href="#about" class="navbar-link">About</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © 2025 Planicorn. All rights reserved.
+    </footer>
+
+</body>
+</html>

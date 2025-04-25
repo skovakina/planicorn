@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <h1 class="auth-header">Sign In to Planicorn</h1>
+
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button-primary">
+            Sign In
+        </button>
+    </form>
+
+    <p class="auth-link">
+        Don't have an account?
+        <a href="{% url 'signup' %}" class="link">Sign Up</a>
+    </p>
+</section>
+{% endblock %}

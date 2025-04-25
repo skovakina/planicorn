@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Planicorn{% endblock %}
+
+{% block content %}
+<section class="landing-section">
+    <h1 class="landing-header">Plan Your Trips and Events Effortlessly</h1>
+    <p class="landing-description">
+        Organize your travel days, plan events, and track activities with your personal trip boards.
+        Planicorn makes travel and scheduling easy, visual, and fun!
+    </p>
+    <a href="{% url 'signup' %}" class="button-primary">
+        Start for Free
+    </a>
+</section>
+
+<section id="about" class="about-section">
+    <h2 class="about-header">About Planicorn</h2>
+    <p class="about-description">
+        Planicorn was created to help you easily organize multi-day trips, events, and experiences.
+        Create boards, add events, and customize your schedule to make every adventure unforgettable.
+    </p>
+</section>
+{% endblock %}
