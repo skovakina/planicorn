@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Board
+from .models import Board, Event, Tag
 from .forms import BoardForm, EventForm
 from django.shortcuts import get_object_or_404
-from .models import Event
 
 
 
@@ -80,6 +79,17 @@ def create_event(request, board_id):
             event.board = board
             event.save()
             form.save_m2m()
+            new_tag_name = form.cleaned_data.get('new_tag')
+            new_tag_color = form.cleaned_data.get('new_tag_color') or "#CCCCCC"
+
+            if new_tag_name:
+                new_tag, created = Tag.objects.get_or_create(
+                    name=new_tag_name.strip(),
+                    board=board,
+                    defaults={'color': new_tag_color}
+                )
+                event.tags.add(new_tag)
+
             return redirect('board_detail', board_id=board.id)
     else:
         form = EventForm(board=board)

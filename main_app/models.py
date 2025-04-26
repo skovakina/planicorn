@@ -21,6 +21,7 @@ class Board(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='tags')
+    color = models.CharField(max_length=7, default='#CCCCCC')
 
     def __str__(self):
         return self.name
