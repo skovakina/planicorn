@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ board.name }}{% endblock %}
+
+{% block content %}
+<section class="board-detail-section">
+    <h1 class="board-detail-header">{{ board.name }}</h1>
+    <p class="board-description">{{ board.description }}</p>
+
+    <h2 class="events-header">Events</h2>
+    {% if events %}
+        <ul class="events-list">
+            {% for event in events %}
+                <li class="event-item">
+                    <strong>{{ event.title }}</strong><br>
+                    {{ event.start_time }} — {{ event.end_time }}
+                    <p>{{ event.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
