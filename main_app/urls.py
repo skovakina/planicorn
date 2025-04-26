@@ -14,4 +14,10 @@ urlpatterns = [
     path('boards/<int:board_id>/edit/', views.edit_board, name='edit_board'),
     path('boards/<int:board_id>/delete/', views.delete_board, name='delete_board'),
     path('boards/<int:board_id>/', views.board_detail, name='board_detail'),
+
+    # Events
+    # Event routes
+    path('boards/<int:board_id>/events/create/', views.create_event, name='create_event'),
+    path('events/<int:event_id>/edit/', views.edit_event, name='edit_event'),
+    path('events/<int:event_id>/delete/', views.delete_event, name='delete_event'),
 ]

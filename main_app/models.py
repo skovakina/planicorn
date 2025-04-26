@@ -32,7 +32,7 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField(Tag, related_name='events', blank=True)  # <- added
+    tags = models.ManyToManyField(Tag, related_name='events', blank=True)
 
     def __str__(self):
         return self.title

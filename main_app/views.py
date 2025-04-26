@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Board
-from .forms import BoardForm
+from .forms import BoardForm, EventForm
 from django.shortcuts import get_object_or_404
+from .models import Event
+
 
 
 @login_required
@@ -65,3 +67,44 @@ def board_detail(request, board_id):
     board = get_object_or_404(Board, id=board_id, owner=request.user)
     events = board.events.all()  # Use related_name from Event model
     return render(request, 'boards/board_detail.html', {'board': board, 'events': events})
+
+
+# Create Event
+@login_required
+def create_event(request, board_id):
+    board = get_object_or_404(Board, id=board_id, owner=request.user)
+    if request.method == 'POST':
+        form = EventForm(request.POST, board=board)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.board = board
+            event.save()
+            form.save_m2m()
+            return redirect('board_detail', board_id=board.id)
+    else:
+        form = EventForm(board=board)
+    return render(request, 'events/event_form.html', {'form': form, 'board': board, 'title': 'Create Event'})
+
+# Edit Event
+@login_required
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id, board__owner=request.user)
+    board = event.board
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event, board=board)
+        if form.is_valid():
+            form.save()
+            return redirect('board_detail', board_id=board.id)
+    else:
+        form = EventForm(instance=event, board=board)
+    return render(request, 'events/event_form.html', {'form': form, 'board': board, 'title': 'Edit Event'})
+
+# Delete Event
+@login_required
+def delete_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id, board__owner=request.user)
+    board_id = event.board.id
+    if request.method == 'POST':
+        event.delete()
+        return redirect('board_detail', board_id=board_id)
+    return render(request, 'events/confirm_delete.html', {'event': event})

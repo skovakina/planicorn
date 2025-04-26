@@ -6,8 +6,9 @@
 <section class="board-detail-section">
     <h1 class="board-detail-header">{{ board.name }}</h1>
     <p class="board-description">{{ board.description }}</p>
+    <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
 
-    <h2 class="events-header">Events</h2>
+<h2 class="events-header">Events</h2>
     {% if events %}
         <ul class="events-list">
             {% for event in events %}
@@ -15,6 +16,17 @@
                     <strong>{{ event.title }}</strong><br>
                     {{ event.start_time }} — {{ event.end_time }}
                     <p>{{ event.description }}</p>
+
+                    {% if event.tags.all %}
+                        <p>Tags:
+                            {% for tag in event.tags.all %}
+                                <span class="tag">{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+
+                    <a href="{% url 'edit_event' event.id %}" class="link-edit">Edit</a> |
+                    <a href="{% url 'delete_event' event.id %}" class="link-delete">Delete</a>
                 </li>
             {% endfor %}
         </ul>
