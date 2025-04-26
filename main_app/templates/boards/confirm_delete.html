@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Board{% endblock %}
+
+{% block content %}
+<section class="confirm-section">
+    <h1 class="confirm-header">Delete Board</h1>
+    <p>Are you sure you want to delete "{{ board.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button-danger">Yes, Delete</button>
+        <a href="{% url 'dashboard' %}" class="button-secondary">Cancel</a>
+    </form>
+</section>
+{% endblock %}

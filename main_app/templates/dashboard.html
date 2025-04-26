@@ -11,6 +11,8 @@
             {% for board in boards %}
                 <li class="board-item">
                     {{ board.name }}
+                    <a href="{% url 'edit_board' board.id %}" class="link-edit">Edit</a> |
+                    <a href="{% url 'delete_board' board.id %}" class="link-delete">Delete</a>
                 </li>
             {% endfor %}
         </ul>
@@ -19,7 +21,7 @@
     {% endif %}
 
     <div class="mt-6">
-        <a href="#" class="button-primary">+ Create New Board</a>  <!-- We'll wire this later -->
+        <a href="{% url 'create_board' %}" class="button-primary">+ Create New Board</a>  
     </div>
 </section>
 {% endblock %}
