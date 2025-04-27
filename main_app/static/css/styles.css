@@ -394,6 +394,18 @@ body {
     margin-bottom: 1rem;
 }
 
+.form-main input[type="color"] {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+}
+
 .form-main-error {
     color: #e05b5b;
     font-size: 0.9rem;
