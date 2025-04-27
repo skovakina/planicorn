@@ -1,37 +1,47 @@
 {% extends "base.html" %}
+{% load custom_filters %}
 
 {% block title %}{{ board.name }}{% endblock %}
 
 {% block content %}
+
 <section class="board-detail-section">
-    <h1 class="board-detail-header">{{ board.name }}</h1>
-    <p class="board-description">{{ board.description }}</p>
-    <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
+    <div class="board-header">
+        <h1 class="board-name">{{ board.name }}</h1>
+        {% if board.location %}
+            <p class="board-location">{{ board.location }}</p>
+        {% endif %}
+        {% if board.start_date and board.end_date %}
+            <p class="board-dates">{{ board.start_date }} — {{ board.end_date }}</p>
+        {% endif %}
+        {% if board.description %}
+            <p class="board-description">{{ board.description }}</p>
+        {% endif %}
+        
+        <a href="{% url 'create_event' board.id %}" class="">+ Add Event</a>
+    </div>
 
-<h2 class="events-header">Events</h2>
-    {% if events %}
-        <ul class="events-list">
+    <!-- <div class="calendar">
+        {% for hour in hours %}
+            <div class="calendar-hour">
+                {{ hour }}:00
+            </div>
+        {% endfor %}
+
+        <div class="calendar-events">
             {% for event in events %}
-                <li class="event-item">
+                <div class="calendar-event" 
+                    style="
+                        top: {{ event.start_time|time_to_percent }};
+                        height: {{ event.duration_in_minutes|duration_to_percent }};
+                        background-color: {{ event.tag.color|default:'#5b7cfa' }};
+                    ">
                     <strong>{{ event.title }}</strong><br>
-                    {{ event.start_time }} — {{ event.end_time }}
-                    <p>{{ event.description }}</p>
-
-                    {% if event.tags.all %}
-                        <p>Tags:
-                            {% for tag in event.tags.all %}
-                                <span class="tag">{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </p>
-                    {% endif %}
-
-                    <a href="{% url 'edit_event' event.id %}" class="link-edit">Edit</a> |
-                    <a href="{% url 'delete_event' event.id %}" class="link-delete">Delete</a>
-                </li>
+                    <small>{{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}</small>
+                </div>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No events yet.</p>
-    {% endif %}
+        </div>
+    </div> -->
 </section>
+
 {% endblock %}

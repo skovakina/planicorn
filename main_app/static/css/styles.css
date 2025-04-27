@@ -1,8 +1,9 @@
 /* Base styles */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box;    
     padding: 0;
     margin: 0;
+
 }
 
 body {
@@ -299,4 +300,42 @@ body {
 .plus-sign {
     font-size: 4rem;
     line-height: 4rem;
+}
+
+.board-header {
+
+
+}
+
+.board-name {
+
+}
+
+.board-location {
+
+}
+
+.board-dates {
+
+}
+
+.board-description {
+
+}
+
+.create-event-button {
+    display: inline-block;
+    background-color: #5b7cfa;
+    color: white;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.create-event-button:hover {
+    background-color: #3a5de0;
 }

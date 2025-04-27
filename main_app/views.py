@@ -64,8 +64,10 @@ def delete_board(request, board_id):
 @login_required
 def board_detail(request, board_id):
     board = get_object_or_404(Board, id=board_id, owner=request.user)
-    events = board.events.all()  # Use related_name from Event model
-    return render(request, 'boards/board_detail.html', {'board': board, 'events': events})
+    events = board.events.all()  
+    hours = list(range(24)) 
+    
+    return render(request, 'boards/board_detail.html', {'board': board, 'events': events, 'hours': hours,})
 
 
 # Create Event
