@@ -5,6 +5,10 @@ class BoardForm(forms.ModelForm):
     class Meta:
         model = Board
         fields = ['name', 'description', 'location', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class EventForm(forms.ModelForm):
     new_tag = forms.CharField(required=False, help_text="New tag name (optional).")

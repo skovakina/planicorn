@@ -4,13 +4,16 @@
 
 {% block content %}
 <section class="form-section">
+    <div class="form-container">
     <h1 class="form-header">{{ title }}</h1>
-    <form method="post" class="board-form">
+    <form method="post" class="form-main">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="button-primary">
             Save
         </button>
     </form>
+    </div>
+
 </section>
 {% endblock %}
