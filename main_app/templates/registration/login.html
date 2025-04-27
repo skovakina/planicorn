@@ -4,12 +4,29 @@
 
 {% block content %}
 <section class="auth-section">
+    <div class="auth-container">
     <h1 class="auth-header">Sign In to Planicorn</h1>
 
     <form method="post" class="auth-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button-primary">
+
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="form-error">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="form-error">{{ form.password.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="button-auth">
             Sign In
         </button>
     </form>
@@ -18,5 +35,6 @@
         Don't have an account?
         <a href="{% url 'signup' %}" class="link">Sign Up</a>
     </p>
+    </div>
 </section>
 {% endblock %}
