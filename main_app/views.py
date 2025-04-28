@@ -69,7 +69,6 @@ def board_detail(request, board_id):
     
     return render(request, 'boards/board_detail.html', {'board': board, 'events': events, 'hours': hours,})
 
-
 # Create Event
 @login_required
 def create_event(request, board_id):
@@ -81,18 +80,9 @@ def create_event(request, board_id):
             event.board = board
             event.save()
             form.save_m2m()
-            new_tag_name = form.cleaned_data.get('new_tag')
-            new_tag_color = form.cleaned_data.get('new_tag_color') or "#CCCCCC"
-
-            if new_tag_name:
-                new_tag, created = Tag.objects.get_or_create(
-                    name=new_tag_name.strip(),
-                    board=board,
-                    defaults={'color': new_tag_color}
-                )
-                event.tags.add(new_tag)
-
             return redirect('board_detail', board_id=board.id)
+        else:
+            print(form.errors) 
     else:
         form = EventForm(board=board)
     return render(request, 'events/event_form.html', {'form': form, 'board': board, 'title': 'Create Event'})
@@ -120,3 +110,15 @@ def delete_event(request, event_id):
         event.delete()
         return redirect('board_detail', board_id=board_id)
     return render(request, 'events/confirm_delete.html', {'event': event})
+
+# Create Tag
+# @login_required
+# def create_tag(request, board_id):
+#     board = get_object_or_404(Board, id=board_id, owner=request.user)
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         color = request.POST.get('color', '#CCCCCC')
+#         if name:
+#             Tag.objects.create(name=name.strip(), color=color, board=board)
+#             return redirect('board_detail', board_id=board.id)
+#     return render(request, 'tag/tag_form.html', {'board': board})

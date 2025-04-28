@@ -20,7 +20,7 @@ class Board(models.Model):
 # Tag model
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='tags')
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='tag')
     color = models.CharField(max_length=7, default='#CCCCCC')
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField(Tag, related_name='events', blank=True)
+    tag = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title
