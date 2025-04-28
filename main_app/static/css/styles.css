@@ -411,3 +411,107 @@ body {
     font-size: 0.9rem;
     margin-top: 0.3rem;
 }
+
+.board-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.board-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.board-location,
+.board-dates,
+.board-description {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.button-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    background-color: #5b7cfa;
+    color: white;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.button-primary:hover {
+    background-color: #4059d6;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.25rem;
+}
+
+.tag-label {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    margin-right: 0.5rem;
+}
+
+.button-delete-tag {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #e05b5b;
+    cursor: pointer;
+}
+
+.button-delete-tag:hover {
+    color: #c43d3d;
+}
+
+.calendar {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 1200px;
+    margin: 2rem auto;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background: #f9f9f9;
+    overflow: hidden;
+}
+
+.calendar-events {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.calendar-event-link {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-decoration: none;
+}
+
+.calendar-event {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+}
+
+.calendar-event:hover {
+    transform: translateY(-4px);
+}

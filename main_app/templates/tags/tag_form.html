@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Create Tag{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="form-container">
+    <h1 class="form-header">Create Tag for {{ board.name }}</h1>
+
+    <form method="post" class="board-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="button-primary">Save</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

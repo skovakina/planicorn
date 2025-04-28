@@ -8,45 +8,64 @@
 <section class="board-detail-section">
     <div class="board-header">
         <h1 class="board-name">{{ board.name }}</h1>
+        
         {% if board.location %}
             <p class="board-location">{{ board.location }}</p>
         {% endif %}
+        
         {% if board.start_date and board.end_date %}
             <p class="board-dates">{{ board.start_date }} — {{ board.end_date }}</p>
         {% endif %}
+        
         {% if board.description %}
             <p class="board-description">{{ board.description }}</p>
         {% endif %}
         
-        <a href="{% url 'create_event' board.id %}" class="">+ Add Event</a>
+        <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
     </div>
 
-    <div class="calendar">
-        <!-- {% for hour in hours %}
-            <div class="calendar-hour">
-                {{ hour }}:00
+    <!-- Tags Section -->
+    <div class="tags-section">
+        <h2 class="tags-header">Tags</h2>
+
+        {% for tag in board.tag.all %}
+            <div class="tag-item">
+                <span class="tag-label" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+                <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="button-delete-tag">×</button>
+                </form>
             </div>
-        {% endfor %} -->
+        {% empty %}
+            <p>No tags yet.</p>
+        {% endfor %}
 
+        <!-- Create New Tag Form -->
+        <div class="create-tag-form">
+            <h3>Create a New Tag</h3>
+            <form method="post" action="{% url 'create_tag' board.id %}">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Tag Name" required class="input-field">
+                <input type="color" name="color" value="#CCCCCC" class="color-picker">
+                <button type="submit" class="button-primary">Add Tag</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="calendar">
         <div class="calendar-events">
-{% for event in events %}
-    <a href="{% url 'edit_event' event.id %}" class="calendar-event-link" 
-        style="
-            top: {{ event.start_time|time_to_percent }};
-            height: {{ event.duration_in_minutes|duration_to_percent }};
-        ">
-        <div class="calendar-event" 
-            style="
-                background-color: {{ event.tag.color|default:'#5b7cfa' }};
-            ">
-            <strong>{{ event.title }}</strong><br>
-            <small>{{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}</small>
+            {% for event in events %}
+                <a href="{% url 'edit_event' event.id %}" class="calendar-event-link" 
+                   style="top: {{ event.start_time|time_to_percent }}; height: {{ event.duration_in_minutes|duration_to_percent }};">
+                    <div class="calendar-event" style="background-color: {{ event.tag.color|default:'#5b7cfa' }};">
+                        <strong>{{ event.title }}</strong><br>
+                        <small>{{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}</small>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
-    </a>
-{% endfor %}
-
-        </div>
-    </div> 
+    </div>
 </section>
 
 {% endblock %}

@@ -32,6 +32,5 @@ class TagForm(forms.ModelForm):
         model = Tag
         fields = ['name', 'color']
         widgets = {
-            'color': forms.TextInput(attrs={'type': 'color'})
+            'color': forms.TextInput(attrs={'type': 'color'}),
         }
-

@@ -20,4 +20,9 @@ urlpatterns = [
     path('boards/<int:board_id>/events/create/', views.create_event, name='create_event'),
     path('events/<int:event_id>/edit/', views.edit_event, name='edit_event'),
     path('events/<int:event_id>/delete/', views.delete_event, name='delete_event'),
+
+    # Tags
+    path('boards/<int:board_id>/tags/create/', views.create_tag, name='create_tag'),
+    path('tags/<int:tag_id>/delete/', views.delete_tag, name='delete_tag'),
+
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Board, Event, Tag
-from .forms import BoardForm, EventForm
+from .forms import BoardForm, EventForm, TagForm
 from django.shortcuts import get_object_or_404
 
 
@@ -111,14 +111,28 @@ def delete_event(request, event_id):
         return redirect('board_detail', board_id=board_id)
     return render(request, 'events/confirm_delete.html', {'event': event})
 
-# Create Tag
-# @login_required
-# def create_tag(request, board_id):
-#     board = get_object_or_404(Board, id=board_id, owner=request.user)
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         color = request.POST.get('color', '#CCCCCC')
-#         if name:
-#             Tag.objects.create(name=name.strip(), color=color, board=board)
-#             return redirect('board_detail', board_id=board.id)
-#     return render(request, 'tag/tag_form.html', {'board': board})
+@login_required
+def create_tag(request, board_id):
+    board = get_object_or_404(Board, id=board_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        if form.is_valid():
+            tag = form.save(commit=False)
+            tag.board = board
+            tag.save()
+            return redirect('board_detail', board_id=board.id)
+    else:
+        form = TagForm()
+    
+    return render(request, 'tags/tag_form.html', {'form': form, 'board': board})
+
+@login_required
+def delete_tag(request, tag_id):
+    if request.method == 'POST':
+        tag = get_object_or_404(Tag, id=tag_id, board__owner=request.user)
+        board_id = tag.board.id
+        tag.delete()
+        return redirect('board_detail', board_id=board_id)
+    else:
+        return redirect('dashboard')  # fallback if someone tries GET
