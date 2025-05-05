@@ -11,6 +11,7 @@
         Back to Dashboard</a>
     <div class="board-header">
         <h1 class="board-name">{{ board.name }}</h1>
+        <a href="{% url 'edit_board' board.id %}" class="button-edit">✎ Edit Board</a>
         
         {% if board.location %}
             <p class="board-location">
@@ -19,26 +20,32 @@
         {% endif %}
         
         {% if board.start_date and board.end_date %}
-            <p class="board-dates">{{ board.start_date }} — {{ board.end_date }}</p>
+            <p class="board-dates">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                        {{ board.start_date }} — {{ board.end_date }}</p>
         {% endif %}
         
         {% if board.description %}
             <p class="board-description">{{ board.description }}</p>
         {% endif %}
         
-        <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
+          <div class="board-actions">
+             <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
+          </div>
     </div>
 
     <!-- Tags Section -->
     <div class="tags-section">
-        <h2 class="tags-header">Tags</h2>
+        <h3 class="tags-header">Manage Tags</h3>
 
         {% for tag in board.tag.all %}
-            <div class="tag-item">
-                <span class="tag-label" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
-                <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+            <div class="tag-item" style="background-color: {{ tag.color }};">
+                <div class="tag-label" >{{ tag.name }}</div>
+                <form method="post" class="delete-tag-form" action="{% url 'delete_tag' tag.id %}">
                     {% csrf_token %}
-                    <button type="submit" class="button-delete-tag">×</button>
+                    <button type="submit" class="button-delete-tag">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
                 </form>
             </div>
         {% empty %}
@@ -46,13 +53,13 @@
         {% endfor %}
 
         <!-- Create New Tag Form -->
-        <div class="create-tag-form">
-            <h3>Create a New Tag</h3>
-            <form method="post" action="{% url 'create_tag' board.id %}">
+        <div class="create-tag">
+
+            <form method="post" class="create-tag-form" action="{% url 'create_tag' board.id %}">
                 {% csrf_token %}
                 <input type="text" name="name" placeholder="Tag Name" required class="input-field">
                 <input type="color" name="color" value="#CCCCCC" class="color-picker">
-                <button type="submit" class="button-primary">Add Tag</button>
+                <button type="submit" class="button-primary">+ Add</button>
             </form>
         </div>
     </div>
