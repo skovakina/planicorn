@@ -12,7 +12,8 @@ class Board(models.Model):
     start_date = models.DateField(null=True, blank=True)    
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  
+    updated_at = models.DateTimeField(auto_now=True)
+    image_url = models.URLField(blank=True, null=True)  
 
     def __str__(self):
         return self.name

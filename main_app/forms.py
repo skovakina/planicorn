@@ -4,7 +4,7 @@ from .models import Board, Event, Tag
 class BoardForm(forms.ModelForm):
     class Meta:
         model = Board
-        fields = ['name', 'description', 'location', 'start_date', 'end_date']
+        fields = ['name', 'description', 'location', 'start_date', 'end_date', 'image_url']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),

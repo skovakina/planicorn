@@ -20,7 +20,11 @@
         {% for board in boards %}
             <div class="board-card">
                 <a href="{% url 'board_detail' board.id %}">
-                    <img src="" alt="Board Image" class="board-image">
+                    {% if board.image_url %}
+                        <img src="{{ board.image_url }}" alt="Board image" class="board-card-image">
+                    {% else %}
+                        <div class="board-image-placeholder"></div>
+                    {% endif %}
                     <div class="board-content">
                         <h2 class="board-title">{{ board.name }}</h2>
                         {% if board.start_date and board.end_date %}
