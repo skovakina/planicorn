@@ -12,26 +12,31 @@
     <div class="board-header">
         <h1 class="board-name">{{ board.name }}</h1>
         <a href="{% url 'edit_board' board.id %}" class="button-edit">✎ Edit Board</a>
+                <div class="board-grid">
+                    <div class="board-content">
+                     {% if board.location %}
+                        <p class="board-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                            {{ board.location }}</p>
+                    {% endif %}
+                    
+                    {% if board.start_date and board.end_date %}
+                        <p class="board-dates">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                                    {{ board.start_date }} — {{ board.end_date }}</p>
+                    {% endif %}
+                    
+                    {% if board.description %}
+                        <p class="board-description">{{ board.description }}</p>
+                    {% endif %}
+                    
+                    <div class="board-actions">
+                        <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
+                    </div>
+                    </div>
+                
+        </div>
         
-        {% if board.location %}
-            <p class="board-location">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-                {{ board.location }}</p>
-        {% endif %}
-        
-        {% if board.start_date and board.end_date %}
-            <p class="board-dates">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                        {{ board.start_date }} — {{ board.end_date }}</p>
-        {% endif %}
-        
-        {% if board.description %}
-            <p class="board-description">{{ board.description }}</p>
-        {% endif %}
-        
-          <div class="board-actions">
-             <a href="{% url 'create_event' board.id %}" class="button-primary">+ Add Event</a>
-          </div>
     </div>
 
     <!-- Tags Section -->
