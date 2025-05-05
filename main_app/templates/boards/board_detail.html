@@ -6,11 +6,16 @@
 {% block content %}
 
 <section class="board-detail-section">
+    <a href="{% url 'dashboard' %}" class="breadcrumb">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Back to Dashboard</a>
     <div class="board-header">
         <h1 class="board-name">{{ board.name }}</h1>
         
         {% if board.location %}
-            <p class="board-location">{{ board.location }}</p>
+            <p class="board-location">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                {{ board.location }}</p>
         {% endif %}
         
         {% if board.start_date and board.end_date %}
@@ -52,20 +57,60 @@
         </div>
     </div>
 
-    <!-- Calendar Section -->
     <div class="calendar">
-        <div class="calendar-events">
-            {% for event in events %}
-                <a href="{% url 'edit_event' event.id %}" class="calendar-event-link" 
-                   style="top: {{ event.start_time|time_to_percent }}; height: {{ event.duration_in_minutes|duration_to_percent }};">
-                    <div class="calendar-event" style="background-color: {{ event.tag.color|default:'#5b7cfa' }};">
-                        <strong>{{ event.title }}</strong><br>
-                        <small>{{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}</small>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
+    <div class="calendar-grid-multiday">
+        {% for day in days %}
+            <div class="calendar-day-column">
+                <div class="calendar-day-header">{{ day|date:"D, M d" }}</div>
+
+                {% for hour in hours %}
+                    <div class="calendar-hour">{{ hour }}:00</div>
+                {% endfor %}
+
+                <div class="calendar-events">
+                    {% for event in events %}
+                        {% if event.start_time.date == day %}
+                        
+                            <a href="{% url 'edit_event' event.id %}" class="calendar-event-link"
+                              style="top: {{ event.start_time|time_to_percent }}%; height: {{ event.duration_in_minutes|duration_to_percent }}%;">
+                                <div class="calendar-event" style="background-color: {{ event.tag.color|default:'#5b7cfa' }};">
+                                    <strong>{{ event.title }}</strong><br>
+                                    <small>{{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}</small>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+        {% endfor %}
     </div>
+</div>
+
+
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const calendar = document.querySelector(".calendar-grid-multiday");
+    const events = document.querySelectorAll(".calendar-event-link");
+
+    if (calendar && events.length > 0) {
+        let firstEventTop = Infinity;
+
+        events.forEach(event => {
+            const top = parseFloat(event.style.top);
+            if (!isNaN(top) && top < firstEventTop) {
+                firstEventTop = top;
+            }
+        });
+
+        if (firstEventTop !== Infinity) {           
+            calendar.parentElement.scrollTop = (firstEventTop / 100) * calendar.scrollHeight - 200; 
+       
+        }
+    }
+});
+</script>
+
 
 {% endblock %}

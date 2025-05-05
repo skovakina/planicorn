@@ -4,17 +4,15 @@ register = template.Library()
 
 @register.filter
 def time_to_percent(value):
-    """Convert a time to a top % for the calendar."""
+    """Convert a time to a top % for the calendar (without % symbol)."""
     if not value:
-        return "0%"
+        return 0
     minutes = value.hour * 60 + value.minute
-    percent = (minutes / (24 * 60)) * 100
-    return f"{percent}%"
+    return (minutes / (24 * 60)) * 100
 
 @register.filter
 def duration_to_percent(value):
-    """Convert a duration (in minutes) to a height % for the calendar."""
+    """Convert duration in minutes to height % (without % symbol)."""
     if not value:
-        return "0%"
-    percent = (value / (24 * 60)) * 100
-    return f"{percent}%"
+        return 0
+    return (value / (24 * 60)) * 100

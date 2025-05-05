@@ -4,8 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Board, Event, Tag
 from .forms import BoardForm, EventForm, TagForm
 from django.shortcuts import get_object_or_404
-
-
+from datetime import timedelta
 
 @login_required
 def dashboard(request):
@@ -61,13 +60,32 @@ def delete_board(request, board_id):
         return redirect('dashboard')
     return render(request, 'boards/confirm_delete.html', {'board': board})
 
+
 @login_required
 def board_detail(request, board_id):
     board = get_object_or_404(Board, id=board_id, owner=request.user)
-    events = board.events.all()  
-    hours = list(range(24)) 
-    
-    return render(request, 'boards/board_detail.html', {'board': board, 'events': events, 'hours': hours,})
+    events = board.events.all()
+    hours = list(range(24))
+
+    for event in events:
+        print(f"{event.title}: {event.start_time} → {event.end_time} = {event.duration_in_minutes:.2f} min")
+
+
+    # Create list of dates between start and end date
+    days = []
+    if board.start_date and board.end_date:
+        current_day = board.start_date
+        while current_day <= board.end_date:
+            days.append(current_day)
+            current_day += timedelta(days=1)
+
+    return render(request, 'boards/board_detail.html', {
+        'board': board,
+        'events': events,
+        'hours': hours,
+        'days': days,
+    })
+
 
 # Create Event
 @login_required
