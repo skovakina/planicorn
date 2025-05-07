@@ -1,11 +1,12 @@
 /* Base styles */
 :root {
-    --primary-color: #5b7cfa;
+    --primary-color: rgb(91, 124, 250);
     --secondary-color: #f7f9fc;
 
     --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.12);
     --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.16);
+    --shadow-color: 0 8px 16px rgba(91, 124, 250, 0.15);
 }
 
 * {
@@ -25,6 +26,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main-content{
@@ -51,6 +56,16 @@ a {
     z-index: 1000;
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-logo {
+    height: 32px;
+}
+
 .navbar-links {
     display: flex;
     align-items: center;
@@ -72,7 +87,9 @@ a {
 .landing-section {
     padding: 6rem 2rem 4rem;
     text-align: center;
+    background-image: url('images/stars.png');
     background: linear-gradient(135deg, #3a5de0  0%, #8ac4fa 100%);
+    
     color: white;
 }
 
@@ -97,13 +114,8 @@ a {
 .hero-buttons a {
     background-color: #ffffff;
     color: var(--primary-color);
-    padding: 0.9rem 2rem;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s, color 0.3s;
+    box-shadow: var(--shadow-2);
+    border: 1px solid var(--primary-color);
 }
 
 .hero-buttons a:hover {
@@ -222,6 +234,12 @@ a {
 
 .board-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.board-header-grid {
+    display: grid;
     grid-template-columns: minmax(600px, 1fr) 1fr;    
     gap: 2rem;
 
@@ -232,14 +250,14 @@ a {
     background-color: #ffffff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
 .board-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
 }
 
 .board-card-image {
@@ -249,12 +267,7 @@ a {
     border-radius: 8px;
 }
 
-.board-card a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    height: 100%;
-}
+
 
 .board-image {
     width: 100%;
@@ -297,6 +310,9 @@ a {
 }
 
 .create-board-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: inherit;
     width: 100%;
@@ -438,6 +454,8 @@ a {
     margin-bottom: 1rem;
 }
 
+
+
 .button-primary {
   display: inline-block;
   width: 100%;
@@ -453,6 +471,10 @@ a {
   cursor: pointer;
   transition: background-color 0.2s ease;
   box-shadow: var(--shadow-1);
+}
+
+.button-landing {
+      max-width: 200px;
 }
 
 
